@@ -219,8 +219,7 @@ def init_db():
         ("649",    "Diğer Olağan Gelir ve Karlar",  "Gelir",     "Diğer"),
         ("500-LK", "LK Cari (Levent Koçoğlu)",  "Ozkaynak",  "Ortak"),
         ("500-BT", "BT Cari (Barış Taşdelen)",  "Ozkaynak",  "Ortak"),
-        ("600",    "Konaklama Geliri - Leo",     "Gelir",     "Gelir"),
-        ("601",    "Konaklama Geliri - CV",      "Gelir",     "Gelir"),
+        ("601",    "Konaklama Geliri",           "Gelir",     "Gelir"),
         ("610",    "Adisyon Geliri",        "Gelir",     "Gelir"),
         ("720",    "Personel Maaşları",          "Gider",     "Gider"),
         ("730",    "Acente Komisyonları",        "Gider",     "Gider"),
@@ -493,7 +492,7 @@ def kaydet_gelir_ozet(yil, ay, otel, konaklama, restoran,
     # Mevcut yevmiye kayıtlarını temizle (aynı ay/otel için)
     aciklama_prefix = f"[OTEL-AKTARIM] {yil}/{ay:02d} {otel}"
     conn.execute("DELETE FROM yevmiye WHERE aciklama LIKE ?", (f"%{aciklama_prefix}%",))
-    gelir_hesap = '600' if otel == 'LEO' else '601'
+    gelir_hesap = '601'
 
     if rezervasyonlar:
         # Gerçek tarihlerle her rezervasyonu ayrı kaydet
