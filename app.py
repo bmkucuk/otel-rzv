@@ -312,12 +312,12 @@ def api_checkin():
         if r.get('checkin'):
             return jsonify({'ok': False, 'error': 'Check-in zaten yapılmış'}), 400
 
-        otel = r.get('otel', 'CV')
+        otel = r.get('otel', 'GENEL')
         musteri = r.get('musteri', '')
         toplam = float(r.get('toplam_fiyat') or 0)
         kapora = float(r.get('kapora') or 0)
         tarih = date.today().isoformat()
-        gelir_hesap = '600' if otel == 'LEO' else '601'
+        gelir_hesap = '601'
         aciklama = f'Föy#{foy_no} {musteri} check-in'
 
         # Check-in kaydını güncelle
@@ -351,12 +351,12 @@ def api_checkin_iptal():
         if not r or not r.get('checkin'):
             return jsonify({'ok': False, 'error': 'Check-in bulunamadı'}), 400
 
-        otel = r.get('otel', 'CV')
+        otel = r.get('otel', 'GENEL')
         musteri = r.get('musteri', '')
         toplam = float(r.get('toplam_fiyat') or 0)
         kapora = float(r.get('kapora') or 0)
         tarih = date.today().isoformat()
-        gelir_hesap = '600' if otel == 'LEO' else '601'
+        gelir_hesap = '601'
         aciklama = f'Föy#{foy_no} {musteri} check-in iptal (storno)'
 
         # Check-in iptal
@@ -434,7 +434,7 @@ def yevmiye_rez_kaydet(foy_no, toplam_fiyat, otel, giris, musteri,
     """Rezervasyon konaklama geliri ve kaporayı yevmiyeye yazar."""
     try:
         tarih = giris or date.today().isoformat()
-        gelir_hesap = '600' if otel == 'LEO' else '601'
+        gelir_hesap = '601'
         aciklama_kon = f'Föy#{foy_no} {musteri} konaklama'
         aciklama_kap = f'Föy#{foy_no} {musteri} kapora'
         conn = mdb.get_conn()
