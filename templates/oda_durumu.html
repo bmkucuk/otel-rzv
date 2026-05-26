@@ -38,16 +38,17 @@
 .cell{width:60px;height:34px;border-radius:3px;border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;cursor:default;position:relative}
 .cell.bos{background:var(--sidebar)}
-.cell.bos.today{background:var(--card2);border-color:#fff;border-width:2px}
+.cell.bos.today{background:var(--card2)}
 .cell.dolu-leo{background:#0a4a7a;color:#00cfff;border-color:#00cfff}
-.cell.dolu-leo.today{border-color:#fff;border-width:2px}
+
 .cell.dolu-leo.giris{background:#0070cc;color:#fff;border-color:#00cfff}
 .cell.dolu-cv{background:#7a2e00;color:#ff6b00;border-color:#ff6b00}
-.cell.dolu-cv.today{border-color:#fff;border-width:2px}
+
 .cell.dolu-cv.giris{background:#cc4a00;color:#fff;border-color:#ff6b00}
 .cell.dolu-genel{background:#0a4a7a;color:#00cfff;border-color:#00cfff}
-.cell.dolu-genel.today{border-color:#fff;border-width:2px}
+
 .cell.dolu-genel.giris{background:#0070cc;color:#fff;border-color:#00cfff}
+.cell.today{border-color:#fff !important;border-width:2px !important}
 .cell:hover .tooltip{display:block}
 .tooltip{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;
   transform:translateX(-50%);background:#0a1628;border:1px solid var(--border);
@@ -116,10 +117,10 @@ function render(d){
     <span><div class="leg-dot" style="background:#0070cc;border:2px solid #00cfff"></div> Otel Leo (Dolu)</span>
     <span><div class="leg-dot" style="background:#cc4a00;border:2px solid #ff6b00"></div> Cunda Villa (Dolu)</span>
     <span><div class="leg-dot" style="background:var(--sidebar);border:1px solid var(--border)"></div> Boş</span>
-    <span style="color:var(--text2)">★ Parlak renk = Bugünkü Tarih</span>` : `
+    <span style="color:#fff;font-weight:600">★ Parlak renk = Bugünkü Tarih</span>` : `
     <span><div class="leg-dot" style="background:#0070cc;border:2px solid #00cfff"></div> Dolu Oda</span>
     <span><div class="leg-dot" style="background:var(--sidebar);border:1px solid var(--border)"></div> Boş</span>
-    <span style="color:var(--text2)">★ Parlak renk = Bugünkü Tarih</span>`;
+    <span style="color:#fff;font-weight:600">★ Parlak renk = Bugünkü Tarih</span>`;
 
   // Tarih satırını üstte render et (sabit kısımda)
   document.getElementById('dates-row').innerHTML = dates.map(dt=>{
