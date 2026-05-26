@@ -25,18 +25,15 @@
 .oda-label{background:var(--card);padding:5px 8px;font-size:12px;font-weight:700;border-radius:4px;border:1px solid var(--border);width:100px;white-space:nowrap;display:flex;align-items:center}
 .oda-label.leo{color:var(--leo)}
 .oda-label.cv{color:var(--cv)}
-.section-header{background:var(--header);color:var(--text2);font-size:11px;font-weight:700;padding:5px 8px;border-radius:3px;grid-column:1/-1;margin:6px 0 2px}
+.section-header{background:var(--header);color:var(--text);font-size:15px;font-weight:800;padding:10px 8px;border-radius:3px;grid-column:1/-1;margin:8px 0 2px;text-align:center;letter-spacing:2px}
 .cell{width:60px;height:34px;border-radius:3px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;cursor:default;position:relative}
 .cell.bos{background:var(--sidebar)}
 .cell.bos.today{background:var(--card2);border-color:var(--accent)40}
 
-/* LEO → Canlı mavi */
-.cell.dolu-leo{background:#0a4a7a;color:#00cfff;border-color:#00cfff}
-.cell.dolu-leo.giris{background:#0070cc;color:#fff;border-color:#00cfff}
-
-/* CV → Canlı turuncu */
-.cell.dolu-cv{background:#7a2e00;color:#ff6b00;border-color:#ff6b00}
-.cell.dolu-cv.giris{background:#cc4a00;color:#fff;border-color:#ff6b00}
+/* Dolu oda → Canlı mavi (tek otel) */
+.cell.dolu-genel{background:#0a4a7a;color:#00cfff;border-color:#00cfff}
+.cell.dolu-genel.giris{background:#0070cc;color:#fff;border-color:#00cfff}
+.oda-label.genel{color:var(--accent)}
 
 .cell:hover .tooltip{display:block}
 .tooltip{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#0a1628;border:1px solid var(--border);padding:8px 12px;border-radius:6px;white-space:nowrap;font-size:12px;color:var(--text);z-index:10;pointer-events:none;box-shadow:0 4px 16px #0006}
@@ -134,12 +131,11 @@ function render(d) {
   for (const room of grid) {
     if (room.otel !== lastOtel) {
       lastOtel = room.otel;
-      const label = room.otel === 'LEO' ? '── OTEL LEO ──' : '── CUNDA VİLLA ──';
-      html += `<div class="section-header">${label}</div>`;
+
     }
 
-    const otelClass = room.otel === 'LEO' ? 'leo' : 'cv';
-    html += `<div class="oda-label ${otelClass}">${room.otel} – ${room.oda_no}</div>`;
+    const otelClass = 'genel';
+    html += `<div class="oda-label genel">Oda-${room.oda_no}</div>`;
 
     for (let i = 0; i < dates.length; i++) {
       const dt = dates[i];
@@ -147,7 +143,7 @@ function render(d) {
       const isToday = dt === today;
 
       if (cell.dolu) {
-        const doluClass = `dolu-${room.otel.toLowerCase()}${cell.is_giris ? ' giris' : ''}`;
+        const doluClass = `dolu-genel${cell.is_giris ? ' giris' : ''}`;
         const girisF = cell.giris ? new Date(cell.giris+'T00:00:00').toLocaleDateString('tr-TR') : '';
         const cikisF = cell.cikis ? new Date(cell.cikis+'T00:00:00').toLocaleDateString('tr-TR') : '';
         html += `<div class="cell ${doluClass}">

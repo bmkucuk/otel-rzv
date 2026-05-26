@@ -36,7 +36,7 @@
     <div id="tbl-kahvalti-wrap">
       <table class="gl-table" id="tbl-kahvalti">
         <thead><tr>
-          <th>Oda</th><th>Otel</th><th>Misafir</th><th>Kişi</th>
+          <th>Oda</th><th>Misafir</th><th>Kişi</th>
         </tr></thead>
         <tbody></tbody>
       </table>
@@ -53,7 +53,7 @@
     <div id="tbl-giris-wrap">
       <table class="gl-table" id="tbl-giris">
         <thead><tr>
-          <th>Oda</th><th>Otel</th><th>Misafir</th><th>Kişi</th><th>Çıkış</th>
+          <th>Oda</th><th>Misafir</th><th>Kişi</th><th>Çıkış</th>
         </tr></thead>
         <tbody></tbody>
       </table>
@@ -70,7 +70,7 @@
     <div id="tbl-cikis-wrap">
       <table class="gl-table" id="tbl-cikis">
         <thead><tr>
-          <th>Oda</th><th>Otel</th><th>Misafir</th><th>Kişi</th><th>Giriş</th>
+          <th>Oda</th><th>Misafir</th><th>Kişi</th><th>Giriş</th>
         </tr></thead>
         <tbody></tbody>
       </table>
@@ -194,19 +194,16 @@ function buildRows(data, type) {
   const cols = type === 'kahvalti' ? 4 : 5;
   if (!data.length) return `<tr><td colspan="${cols}" class="empty-msg">Kayıt yok</td></tr>`;
   return data.map(r => {
-    const otelCls = r.otel === 'LEO' ? 'otel-leo' : 'otel-cv';
     const kisiStr = r.cocuk > 0 ? `${r.yetiskin}+${r.cocuk}` : `${r.yetiskin}`;
     if (type === 'kahvalti') {
       return `<tr>
         <td>${r.oda_no}</td>
-        <td class="${otelCls}">${r.otel}</td>
         <td>${r.musteri}</td>
         <td>${kisiStr}</td>
       </tr>`;
     } else if (type === 'giris') {
       return `<tr>
         <td>${r.oda_no}</td>
-        <td class="${otelCls}">${r.otel}</td>
         <td>${r.musteri}</td>
         <td>${kisiStr}</td>
         <td>${fmt(r.cikis)}</td>
@@ -214,7 +211,6 @@ function buildRows(data, type) {
     } else { // cikis
       return `<tr>
         <td>${r.oda_no}</td>
-        <td class="${otelCls}">${r.otel}</td>
         <td>${r.musteri}</td>
         <td>${kisiStr}</td>
         <td>${fmt(r.giris)}</td>
@@ -225,12 +221,10 @@ function buildRows(data, type) {
 
 function toplam(data, label) {
   if (!data.length) return `${label}: 0 oda`;
-  const leo = data.filter(r => r.otel === 'LEO').length;
-  const cv  = data.filter(r => r.otel === 'CV').length;
+  const toplam_aktif = data.length;
   const kisi = data.reduce((s, r) => s + (r.yetiskin||0) + (r.cocuk||0), 0);
   let parts = [`${data.length} oda · ${kisi} kişi`];
-  if (leo) parts.push(`LEO: ${leo}`);
-  if (cv)  parts.push(`CV: ${cv}`);
+  if (toplam_aktif) parts.push(`Toplam: ${toplam_aktif}`);
   return parts.join(' &nbsp;|&nbsp; ');
 }
 

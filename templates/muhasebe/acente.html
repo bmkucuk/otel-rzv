@@ -99,7 +99,7 @@ function onFoyChange() {
   if (rez) {
     document.getElementById('f-misafir').value = rez.musteri;
     document.getElementById('f-tutar').value = rez.toplam_fiyat || 0;
-    document.getElementById('f-otel').value = rez.otel || 'LEO';
+    document.getElementById('f-otel').value = 'GENEL';
     hesaplaKomisyon();
   }
 }
@@ -222,7 +222,7 @@ async function duzenle(id) {
   document.getElementById('f-oran').value = r.komisyon_oran || 15;
   document.getElementById('f-kom').value = r.komisyon_tl || 0;
   document.getElementById('f-gelen').value = r.gelen_odeme || 0;
-  document.getElementById('f-otel').value = r.otel || 'LEO';
+  document.getElementById('f-otel').value = 'GENEL';
   document.getElementById('modal').classList.add('open');
 }
 

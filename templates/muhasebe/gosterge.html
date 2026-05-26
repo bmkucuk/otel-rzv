@@ -26,7 +26,7 @@
 <div class="table-wrap">
   <table>
     <thead>
-      <tr><th>Ay</th><th>Leo Kon.</th><th>CV Kon.</th><th>Adisyon</th><th>Toplam Gelir</th><th>Personel</th><th>Vergi</th><th>Net</th></tr>
+      <tr><th>Ay</th><th>Konaklama</th><th>Adisyon</th><th>Toplam Gelir</th><th>Personel</th><th>Vergi</th><th>Net</th></tr>
     </thead>
     <tbody id="aylik-tbody"><tr class="loading-row"><td colspan="8"><span class="spinner"></span></td></tr></tbody>
   </table>
@@ -42,7 +42,7 @@ async function load() {
 
   document.getElementById('gelir-kartlar').innerHTML = `
     <div class="stat-card"><div class="label">Leo Konaklama</div><div class="value leo-tag">${fmt(k.leo_kon)}</div></div>
-    <div class="stat-card"><div class="label">CV Konaklama</div><div class="value cv-tag">${fmt(k.cv_kon)}</div></div>
+    <div class="stat-card"><div class="label">Konaklama</div><div class="value">${fmt((k.leo_kon||0)+(k.cv_kon||0))}</div></div>
     <div class="stat-card"><div class="label">Adisyon</div><div class="value yellow">${fmt(k.restoran)}</div></div>
     <div class="stat-card"><div class="label">Toplam Tahsilat</div><div class="value green">${fmt(k.tahsilat)}<div style="font-size:11px;color:var(--text2);margin-top:4px">Nakit:${fmt(k.nakit)} KK:${fmt(k.kk)}</div></div></div>
     <div class="stat-card"><div class="label">Toplam Kapora</div><div class="value green">${fmt(k.kapora)}</div></div>

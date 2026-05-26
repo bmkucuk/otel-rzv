@@ -158,8 +158,7 @@ def api_gunluk_liste():
 def api_dashboard():
     today = date.today().isoformat()
     girisler, cikislar, aktifler, kahvalti = db.get_dashboard(today)
-    leo_aktif = sum(1 for r in aktifler if r['otel'] == 'LEO')
-    cv_aktif  = sum(1 for r in aktifler if r['otel'] == 'CV')
+    aktif_oda = len(aktifler)
     toplam_alacak = sum((r.get('rez_bakiye') or 0) + (r.get('adis_bakiye') or 0)
                         for r in db.get_rezervasyonlar()
                         if r.get('durum') != 'Kapora Yandı')
@@ -168,8 +167,7 @@ def api_dashboard():
         'stats': {
             'bugun_giris':   len(girisler),
             'bugun_cikis':   len(cikislar),
-            'leo_aktif':     leo_aktif,
-            'cv_aktif':      cv_aktif,
+            'aktif_oda':     aktif_oda,
             'kahvalti_kisi': kahvalti,
             'toplam_alacak': toplam_alacak,
         },
@@ -197,9 +195,8 @@ def api_oda_durumu():
     today = date.today().isoformat()
 
     rezervasyonlar = [r for r in db.get_rezervasyonlar() if r.get("durum") != "Kapora Yandı"]
-    cv_odalar  = list(range(1, 11))
-    leo_odalar = list(range(11, 30))
-    all_rooms  = [('CV', o) for o in cv_odalar] + [('LEO', o) for o in leo_odalar]
+    odalar    = list(range(1, 31))
+    all_rooms = [('GENEL', o) for o in odalar]
 
     grid = []
     for otel_label, oda_no in all_rooms:
@@ -389,7 +386,7 @@ def api_kapora_yandi():
         kapora = float(r.get('kapora') or 0)
         if kapora <= 0:
             return jsonify({'ok': False, 'error': 'Kapora yok'}), 400
-        otel = r.get('otel', 'LEO')
+        otel = r.get('otel', 'GENEL')
         gelir_hesap = '601'
         musteri = r.get('musteri', '')
         tarih = date.today().isoformat()

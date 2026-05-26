@@ -23,7 +23,7 @@ def init_db():
     CREATE TABLE IF NOT EXISTS rezervasyonlar (
         id              INTEGER PRIMARY KEY AUTOINCREMENT,
         oda_no          INTEGER NOT NULL,
-        otel            TEXT NOT NULL DEFAULT 'LEO',
+        otel            TEXT NOT NULL DEFAULT 'GENEL',
         foy_no          INTEGER UNIQUE NOT NULL,
         kanal           TEXT DEFAULT '',
         musteri         TEXT NOT NULL,
@@ -81,9 +81,8 @@ def init_db():
     # Oda listesini doldur
     count = conn.execute("SELECT COUNT(*) FROM odalar").fetchone()[0]
     if count == 0:
-        leo = [(i, 'LEO') for i in range(11, 30)]
-        cv  = [(i, 'CV')  for i in range(1, 11)]
-        conn.executemany("INSERT OR IGNORE INTO odalar(oda_no,otel) VALUES(?,?)", leo + cv)
+        odalar = [(i, 'GENEL') for i in range(1, 31)]
+        conn.executemany("INSERT OR IGNORE INTO odalar(oda_no,otel) VALUES(?,?)", odalar)
     # Migration: durum kolonu yoksa ekle
     cols = [r[1] for r in conn.execute("PRAGMA table_info(rezervasyonlar)").fetchall()]
     if 'checkin' not in cols:
@@ -156,7 +155,7 @@ def save_rezervasyon(data):
              kapora,kapora_tarihi,rez_tahsilat,rez_odeme_sekli,rez_bakiye,aciklama)
         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
     """, (
-        int(data['oda_no']), data['otel'], int(data['foy_no']),
+        int(data['oda_no']), 'GENEL', int(data['foy_no']),
         data.get('kanal',''), data['musteri'],
         int(data.get('yetiskin',1)), int(data.get('cocuk',0)),
         data.get('ek_yatak','Yok'), gun_fiyat,
@@ -190,7 +189,7 @@ def update_rezervasyon(foy_no, data):
             updated_at=datetime('now','localtime')
         WHERE foy_no=?
     """, (
-        int(data['oda_no']), data['otel'], data.get('kanal',''),
+        int(data['oda_no']), 'GENEL', data.get('kanal',''),
         data['musteri'], int(data.get('yetiskin',1)), int(data.get('cocuk',0)),
         data.get('ek_yatak','Yok'), gun_fiyat, giris, cikis,
         toplam_gun, toplam_fiyat, kapora, data.get('kapora_tarihi'),
@@ -289,7 +288,7 @@ def save_adisyon(data):
         rez['oda_no'] if rez else None,
         data.get('tarih'), float(data['tutar']),
         data.get('odeme','Oda Hesabına'), data.get('aciklama',''),
-        rez['otel'] if rez else ''
+        'GENEL'
     ))
     # Rezervasyondaki adisyon toplamını güncelle
     _sync_adisyon_totals(conn, foy_no)
@@ -413,7 +412,7 @@ def import_from_excel(excel_path):
                  adisyon,adis_tahsilat,adis_odeme_sekli,adis_bakiye,aciklama)
                 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
             """, (
-                col(0), str(col(1) or ('LEO' if (col(0) or 0)>10 else 'CV')),
+                col(0), 'GENEL',
                 col(2), str(col(3) or ''), str(col(4) or ''),
                 int(_f(col(5)) or 1), int(_f(col(6)) or 0),
                 str(col(7) or 'Yok'), gun_fiyat,

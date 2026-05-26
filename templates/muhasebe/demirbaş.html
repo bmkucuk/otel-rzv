@@ -87,8 +87,7 @@ async function load() {
   const toplam = filtered.reduce((s, r) => s + (r.toplam || 0), 0);
   document.getElementById('kartlar').innerHTML = `
     <div class="stat-card"><div class="label">Toplam Demirbaş</div><div class="value red">${fmt(toplam)}</div><div class="sub">${filtered.length} kayıt</div></div>
-    <div class="stat-card"><div class="label">Leo</div><div class="value yellow">${fmt(filtered.filter(r=>r.otel==='LEO').reduce((s,r)=>s+(r.toplam||0),0))}</div></div>
-    <div class="stat-card"><div class="label">Cunda Villa</div><div class="value yellow">${fmt(filtered.filter(r=>r.otel==='CV').reduce((s,r)=>s+(r.toplam||0),0))}</div></div>
+    <div class="stat-card"><div class="label">Toplam</div><div class="value yellow">${fmt(filtered.reduce((s,r)=>s+(r.toplam||0),0))}</div></div>
     <div class="stat-card"><div class="label">Genel</div><div class="value yellow">${fmt(filtered.filter(r=>r.otel==='GENEL').reduce((s,r)=>s+(r.toplam||0),0))}</div></div>`;
 
   document.getElementById('tbody').innerHTML = filtered.map(r => `<tr>
