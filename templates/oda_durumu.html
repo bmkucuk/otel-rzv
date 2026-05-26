@@ -48,7 +48,6 @@
 .cell.dolu-genel{background:#0a4a7a;color:#00cfff;border-color:#00cfff}
 
 .cell.dolu-genel.giris{background:#0070cc;color:#fff;border-color:#00cfff}
-.cell.today{border-color:#fff !important;border-width:2px !important}
 .cell:hover .tooltip{display:block}
 .tooltip{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;
   transform:translateX(-50%);background:#0a1628;border:1px solid var(--border);
@@ -56,6 +55,7 @@
   color:var(--text);z-index:30;pointer-events:none;box-shadow:0 4px 16px #0006}
 .tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
   border:5px solid transparent;border-top-color:#0a1628}
+.cell.today{outline:2px solid #fff !important;outline-offset:-1px !important}
 </style>
 
 <!-- SABİT KISIM: nav + legend + tarih satırı -->
