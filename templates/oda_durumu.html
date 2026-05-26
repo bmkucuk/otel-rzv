@@ -55,7 +55,6 @@
   color:var(--text);z-index:30;pointer-events:none;box-shadow:0 4px 16px #0006}
 .tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
   border:5px solid transparent;border-top-color:#0a1628}
-.cell.today{outline:2px solid #fff !important;outline-offset:-1px !important}
 </style>
 
 <!-- SABİT KISIM: nav + legend + tarih satırı -->
@@ -158,10 +157,10 @@ function render(d){
         const cls=base+(cell.is_giris?' giris':'');
         const gF=cell.giris?new Date(cell.giris+'T00:00:00').toLocaleDateString('tr-TR'):'';
         const cF=cell.cikis?new Date(cell.cikis+'T00:00:00').toLocaleDateString('tr-TR'):'';
-        const todayStyleD = isToday ? 'outline:2px solid #fff;outline-offset:-1px' : '';
+        const todayStyleD = isToday ? 'border:2px solid white !important;box-sizing:border-box' : '';
         html+=`<div class="cell ${cls}${isToday?' today':''}" style="${todayStyleD}">${cell.initials}<div class="tooltip">${cell.musteri}<br>${gF} – ${cF}<br>Föy: ${cell.foy_no}</div></div>`;
       } else {
-        const todayStyle = isToday ? 'outline:2px solid #fff;outline-offset:-1px;background:#1a2a3a' : '';
+        const todayStyle = isToday ? 'border:2px solid white !important;box-sizing:border-box;background:#1a2535' : '';
         html+=`<div class="cell bos${isToday?' today':''}" style="${todayStyle}"></div>`;
       }
     }
