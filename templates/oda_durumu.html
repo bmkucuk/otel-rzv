@@ -22,7 +22,7 @@
   padding:6px 4px;text-align:center;min-width:60px;width:60px;
   border:1px solid var(--border);border-radius:3px;white-space:pre-line;flex-shrink:0;
 }
-.day-header.today{color:var(--accent);border-color:var(--accent)40}
+.day-header.today{color:#fff;border-color:#fff;background:#ffffff22;font-weight:900}
 
 /* Grid sadece oda satırları, scroll burada */
 .grid-wrap{overflow-x:auto;overflow-y:auto;max-height:calc(100vh - 200px)}
@@ -38,12 +38,15 @@
 .cell{width:60px;height:34px;border-radius:3px;border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;cursor:default;position:relative}
 .cell.bos{background:var(--sidebar)}
-.cell.bos.today{background:var(--card2);border-color:var(--accent)40}
+.cell.bos.today{background:var(--card2);border-color:#fff;border-width:2px}
 .cell.dolu-leo{background:#0a4a7a;color:#00cfff;border-color:#00cfff}
+.cell.dolu-leo.today{border-color:#fff;border-width:2px}
 .cell.dolu-leo.giris{background:#0070cc;color:#fff;border-color:#00cfff}
 .cell.dolu-cv{background:#7a2e00;color:#ff6b00;border-color:#ff6b00}
+.cell.dolu-cv.today{border-color:#fff;border-width:2px}
 .cell.dolu-cv.giris{background:#cc4a00;color:#fff;border-color:#ff6b00}
 .cell.dolu-genel{background:#0a4a7a;color:#00cfff;border-color:#00cfff}
+.cell.dolu-genel.today{border-color:#fff;border-width:2px}
 .cell.dolu-genel.giris{background:#0070cc;color:#fff;border-color:#00cfff}
 .cell:hover .tooltip{display:block}
 .tooltip{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;
@@ -113,10 +116,10 @@ function render(d){
     <span><div class="leg-dot" style="background:#0070cc;border:2px solid #00cfff"></div> Otel Leo (Dolu)</span>
     <span><div class="leg-dot" style="background:#cc4a00;border:2px solid #ff6b00"></div> Cunda Villa (Dolu)</span>
     <span><div class="leg-dot" style="background:var(--sidebar);border:1px solid var(--border)"></div> Boş</span>
-    <span style="color:var(--text2);font-size:12px">★ Parlak renk = Giriş günü</span>` : `
+    <span style="color:var(--text2)">★ Parlak renk = Bugünkü Tarih</span>` : `
     <span><div class="leg-dot" style="background:#0070cc;border:2px solid #00cfff"></div> Dolu Oda</span>
     <span><div class="leg-dot" style="background:var(--sidebar);border:1px solid var(--border)"></div> Boş</span>
-    <span style="color:var(--text2);font-size:12px">★ Parlak renk = Giriş günü</span>`;
+    <span style="color:var(--text2)">★ Parlak renk = Bugünkü Tarih</span>`;
 
   // Tarih satırını üstte render et (sabit kısımda)
   document.getElementById('dates-row').innerHTML = dates.map(dt=>{
@@ -154,7 +157,7 @@ function render(d){
         const cls=base+(cell.is_giris?' giris':'');
         const gF=cell.giris?new Date(cell.giris+'T00:00:00').toLocaleDateString('tr-TR'):'';
         const cF=cell.cikis?new Date(cell.cikis+'T00:00:00').toLocaleDateString('tr-TR'):'';
-        html+=`<div class="cell ${cls}">${cell.initials}<div class="tooltip">${cell.musteri}<br>${gF} – ${cF}<br>Föy: ${cell.foy_no}</div></div>`;
+        html+=`<div class="cell ${cls}${isToday?' today':''}">${cell.initials}<div class="tooltip">${cell.musteri}<br>${gF} – ${cF}<br>Föy: ${cell.foy_no}</div></div>`;
       } else {
         html+=`<div class="cell bos${isToday?' today':''}"></div>`;
       }
