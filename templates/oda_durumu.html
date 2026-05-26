@@ -5,110 +5,122 @@
 
 {% block content %}
 <style>
-/* #content overflow'u bu sayfada iptal et — scroll bizim wrapper'da olacak */
-#content { overflow: hidden !important; display: flex; flex-direction: column; padding: 0 !important; }
+.oda-nav{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.nav-buttons-group{display:flex;gap:6px;align-items:center}
+.oda-nav button{background:var(--card2);border:1px solid var(--border);color:var(--text);padding:7px 14px;border-radius:6px;cursor:pointer;font-size:13px}
+.oda-nav button:hover{border-color:var(--accent);color:var(--accent)}
+.oda-nav .period{flex:1;text-align:center;font-weight:700;font-size:14px;color:var(--text)}
+.legend{display:flex;gap:18px;font-size:13px;align-items:center;flex-wrap:wrap}
+.legend span{display:flex;align-items:center;gap:8px;font-weight:500}
+.leg-dot{width:18px;height:18px;border-radius:4px}
 
-.oda-page { display: flex; flex-direction: column; height: 100%; }
-
-/* Sabit üst bar */
-.sticky-bar {
-  flex-shrink: 0;
-  background: var(--bg, #0d1117);
-  padding: 16px 24px 10px 24px;
-  border-bottom: 1px solid var(--border);
-}
-
-.oda-nav { display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
-.nav-buttons-group { display:flex; gap:6px; align-items:center; }
-.oda-nav button { background:var(--card2); border:1px solid var(--border); color:var(--text); padding:7px 14px; border-radius:6px; cursor:pointer; font-size:13px; }
-.oda-nav button:hover { border-color:var(--accent); color:var(--accent); }
-.oda-nav .period { flex:1; text-align:center; font-weight:700; font-size:14px; color:var(--text); }
-.legend { display:flex; gap:18px; font-size:13px; align-items:center; flex-wrap:wrap; }
-.legend span { display:flex; align-items:center; gap:8px; font-weight:500; }
-.leg-dot { width:18px; height:18px; border-radius:4px; }
-
-/* Scroll alanı: hem x hem y */
-.grid-scroll {
-  flex: 1;
-  overflow: auto;
-  padding: 16px 24px;
+#sticky-bar{
+  background:var(--sidebar,#0d1117);
+  padding-bottom:8px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:8px;
 }
 
-/* Grid */
-.oda-grid { display: grid; gap: 2px; min-width: max-content; }
-.day-header {
-  background: var(--header); color: var(--text2); font-size:11px; font-weight:700;
-  padding:6px 4px; text-align:center; width:60px; border:1px solid var(--border);
-  border-radius:3px; white-space:pre-line;
-  position: sticky; top: 0; z-index: 5;
-  background: var(--card2);
+#grid-scroll{
+  overflow:auto;
 }
-.day-header.today { color:var(--accent); border-color:var(--accent)40; }
-.oda-label {
-  background:var(--card); padding:5px 8px; font-size:12px; font-weight:700;
-  border-radius:4px; border:1px solid var(--border); width:100px; white-space:nowrap;
-  display:flex; align-items:center;
-  position: sticky; left: 0; z-index: 4; background: var(--card);
+
+.oda-grid{display:grid;gap:2px;min-width:max-content}
+
+.day-header{
+  background:var(--card2);color:var(--text2);font-size:11px;font-weight:700;
+  padding:6px 4px;text-align:center;width:60px;border:1px solid var(--border);
+  border-radius:3px;white-space:pre-line;
+  position:sticky;top:0;z-index:5;
 }
-.oda-label.leo { color:var(--leo); }
-.oda-label.cv  { color:var(--cv);  }
-.oda-label.genel { color:var(--accent); }
-.section-header {
-  background:var(--header); color:var(--text); font-size:15px; font-weight:800;
-  padding:10px 8px; border-radius:3px; grid-column:1/-1; margin:8px 0 2px;
-  text-align:center; letter-spacing:2px;
-  position: sticky; left: 0;
+.day-header.today{color:var(--accent);border-color:var(--accent)40}
+
+.oda-label{
+  background:var(--card);padding:5px 8px;font-size:12px;font-weight:700;
+  border-radius:4px;border:1px solid var(--border);width:100px;white-space:nowrap;
+  display:flex;align-items:center;
+  position:sticky;left:0;z-index:4;
 }
-.cell {
-  width:60px; height:34px; border-radius:3px; border:1px solid var(--border);
-  display:flex; align-items:center; justify-content:center; font-size:11px;
-  font-weight:700; cursor:default; position:relative;
+.oda-label.leo{color:var(--leo)}
+.oda-label.cv{color:var(--cv)}
+.oda-label.genel{color:var(--accent)}
+
+.section-header{
+  background:var(--header);color:var(--text);font-size:15px;font-weight:800;
+  padding:10px 8px;border-radius:3px;grid-column:1/-1;margin:8px 0 2px;
+  text-align:center;letter-spacing:2px;
+  position:sticky;left:0;
 }
-.cell.bos { background:var(--sidebar); }
-.cell.bos.today { background:var(--card2); border-color:var(--accent)40; }
-.cell.dolu-leo  { background:#0a4a7a; color:#00cfff; border-color:#00cfff; }
-.cell.dolu-leo.giris  { background:#0070cc; color:#fff; border-color:#00cfff; }
-.cell.dolu-cv   { background:#7a2e00; color:#ff6b00; border-color:#ff6b00; }
-.cell.dolu-cv.giris   { background:#cc4a00; color:#fff; border-color:#ff6b00; }
-.cell.dolu-genel { background:#0a4a7a; color:#00cfff; border-color:#00cfff; }
-.cell.dolu-genel.giris { background:#0070cc; color:#fff; border-color:#00cfff; }
-.cell:hover .tooltip { display:block; }
-.tooltip {
-  display:none; position:absolute; bottom:calc(100% + 6px); left:50%;
-  transform:translateX(-50%); background:#0a1628; border:1px solid var(--border);
-  padding:8px 12px; border-radius:6px; white-space:nowrap; font-size:12px;
-  color:var(--text); z-index:30; pointer-events:none; box-shadow:0 4px 16px #0006;
+.cell{
+  width:60px;height:34px;border-radius:3px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:11px;
+  font-weight:700;cursor:default;position:relative;
 }
-.tooltip::after {
-  content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%);
-  border:5px solid transparent; border-top-color:#0a1628;
+.cell.bos{background:var(--sidebar)}
+.cell.bos.today{background:var(--card2);border-color:var(--accent)40}
+.cell.dolu-leo{background:#0a4a7a;color:#00cfff;border-color:#00cfff}
+.cell.dolu-leo.giris{background:#0070cc;color:#fff;border-color:#00cfff}
+.cell.dolu-cv{background:#7a2e00;color:#ff6b00;border-color:#ff6b00}
+.cell.dolu-cv.giris{background:#cc4a00;color:#fff;border-color:#ff6b00}
+.cell.dolu-genel{background:#0a4a7a;color:#00cfff;border-color:#00cfff}
+.cell.dolu-genel.giris{background:#0070cc;color:#fff;border-color:#00cfff}
+.cell:hover .tooltip{display:block}
+.tooltip{
+  display:none;position:absolute;bottom:calc(100% + 6px);left:50%;
+  transform:translateX(-50%);background:#0a1628;border:1px solid var(--border);
+  padding:8px 12px;border-radius:6px;white-space:nowrap;font-size:12px;
+  color:var(--text);z-index:30;pointer-events:none;box-shadow:0 4px 16px #0006;
+}
+.tooltip::after{
+  content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:5px solid transparent;border-top-color:#0a1628;
 }
 </style>
 
-<div class="oda-page">
-  <!-- SABİT ÜST BAR -->
-  <div class="sticky-bar">
-    <div class="oda-nav">
-      <div class="nav-buttons-group">
-        <button onclick="shift(-7)">◀ Önceki Hafta</button>
-        <button onclick="goToday()" style="color:var(--accent)">Bugün</button>
-        <button onclick="shift(7)">Sonraki Hafta ▶</button>
-        <button onclick="reload()" id="yenile-btn">🔄 Yenile</button>
-      </div>
-      <div class="period" id="period-lbl">—</div>
+<div id="sticky-bar">
+  <div class="oda-nav">
+    <div class="nav-buttons-group">
+      <button onclick="shift(-7)">◀ Önceki Hafta</button>
+      <button onclick="goToday()" style="color:var(--accent)">Bugün</button>
+      <button onclick="shift(7)">Sonraki Hafta ▶</button>
+      <button onclick="reload()" id="yenile-btn">🔄 Yenile</button>
     </div>
-    <div class="legend" id="legend-area"></div>
+    <div class="period" id="period-lbl">—</div>
   </div>
-
-  <!-- SCROLL ALANI -->
-  <div class="grid-scroll">
-    <div class="oda-grid" id="oda-grid"></div>
-  </div>
+  <div class="legend" id="legend-area"></div>
 </div>
+
+<div id="grid-scroll">
+  <div class="oda-grid" id="oda-grid"></div>
+</div>
+
 {% endblock %}
 
 {% block scripts %}
 <script>
+// Scroll container'ı bul ve sabitle
+function fixLayout() {
+  const bar = document.getElementById('sticky-bar');
+  const scroll = document.getElementById('grid-scroll');
+  const content = document.getElementById('content');
+
+  if (!bar || !scroll || !content) return;
+
+  // #content'i overflow:hidden yap
+  content.style.overflow = 'hidden';
+  content.style.padding = '0';
+  content.style.display = 'flex';
+  content.style.flexDirection = 'column';
+
+  // sticky-bar'a padding ekle
+  bar.style.padding = '16px 24px 10px 24px';
+
+  // grid-scroll kalan alanı doldursun
+  scroll.style.flex = '1';
+  scroll.style.overflow = 'auto';
+  scroll.style.padding = '8px 24px 24px 24px';
+}
+
 let startDate = new Date();
 startDate.setHours(0,0,0,0);
 
@@ -140,7 +152,6 @@ function render(d){
   const dayNames=['Paz','Pzt','Sal','Çar','Per','Cum','Cmt'];
   const isTwoHotel=grid.some(r=>r.otel==='LEO'||r.otel==='CV');
 
-  // Legend
   document.getElementById('legend-area').innerHTML = isTwoHotel ? `
     <span><div class="leg-dot" style="background:#0070cc;border:2px solid #00cfff"></div> Otel Leo (Dolu)</span>
     <span><div class="leg-dot" style="background:#cc4a00;border:2px solid #ff6b00"></div> Cunda Villa (Dolu)</span>
@@ -150,14 +161,13 @@ function render(d){
     <span><div class="leg-dot" style="background:var(--sidebar);border:1px solid var(--border)"></div> Boş</span>
     <span style="color:var(--text2);font-size:12px">★ Parlak renk = Giriş günü</span>`;
 
-  // Grid
   const gridEl=document.getElementById('oda-grid');
   gridEl.style.gridTemplateColumns=`100px repeat(${dates.length},60px)`;
 
   let html='';
 
-  // Header row — sticky top:0
-  html+=`<div style="position:sticky;top:0;z-index:6;background:var(--card2);border-radius:4px;display:flex;align-items:center;padding:0 4px;font-size:11px;font-weight:700;color:var(--text2)"></div>`;
+  // Header — ilk cell boş (oda-label genişliği için)
+  html+=`<div style="position:sticky;top:0;left:0;z-index:10;background:var(--card2);border-radius:3px;width:100px"></div>`;
   for(const dt of dates){
     const d2=new Date(dt+'T00:00:00');
     const isToday=dt===today;
@@ -194,6 +204,8 @@ function render(d){
   gridEl.innerHTML=html;
 }
 
+// Sayfa yüklenince layout'u JS ile sabitle
+document.addEventListener('DOMContentLoaded', fixLayout);
 load();
 </script>
 {% endblock %}
