@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{% block title %}Rezervasyon & Ön Muhasebe{% endblock %}</title>
+<title>{% block title %}Otel Leo & Cunda Villa{% endblock %}</title>
 <style>
 :root {
   --bg:       #0d1b2a;
@@ -45,6 +45,7 @@ nav a .icon{font-size:16px;width:20px;text-align:center}
 #topbar h1{font-size:18px;font-weight:700;color:var(--text)}
 #topbar .meta{font-size:12px;color:var(--text2)}
 #content{flex:1;overflow-y:auto;padding:24px}
+body.page-oda-durumu #content{overflow:hidden;padding:0;display:flex;flex-direction:column}
 
 /* ── Cards ── */
 .cards-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
@@ -126,12 +127,12 @@ select.filter{background:var(--card);border:1px solid var(--border);color:var(--
 }
 </style>
 </head>
-<body>
+<body class="page-{{ active }}">
 
 <div id="sidebar">
   <div class="brand">
     <span class="icon">🏨</span>
-    <span class="name">Rezervasyon<br>& Ön Muhasebe</span>
+    <span class="name">Otel Leo<br>& Cunda Villa</span>
   </div>
   <nav>
     <a href="/dashboard" class="{% if active=='dashboard' %}active{% endif %}">
