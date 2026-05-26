@@ -157,10 +157,10 @@ function render(d){
         const cls=base+(cell.is_giris?' giris':'');
         const gF=cell.giris?new Date(cell.giris+'T00:00:00').toLocaleDateString('tr-TR'):'';
         const cF=cell.cikis?new Date(cell.cikis+'T00:00:00').toLocaleDateString('tr-TR'):'';
-        const todayStyleD = isToday ? 'border:2px solid white !important;box-sizing:border-box' : '';
+        const todayStyleD = isToday ? 'border:3px solid #ffffff' : '';
         html+=`<div class="cell ${cls}${isToday?' today':''}" style="${todayStyleD}">${cell.initials}<div class="tooltip">${cell.musteri}<br>${gF} – ${cF}<br>Föy: ${cell.foy_no}</div></div>`;
       } else {
-        const todayStyle = isToday ? 'border:2px solid white !important;box-sizing:border-box;background:#1a2535' : '';
+        const todayStyle = isToday ? 'border:3px solid #ffffff;background:#253550' : '';
         html+=`<div class="cell bos${isToday?' today':''}" style="${todayStyle}"></div>`;
       }
     }
